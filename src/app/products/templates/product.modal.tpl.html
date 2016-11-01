@@ -1,0 +1,50 @@
+<section class="col-md-8 col-md-offset-2">
+    <div class="panel panel-default" ng-show="!pModal.oneBuyerSelected || pModal.BuyerSelected.ID == buyer.ID">
+        <div class="panel-heading">
+            <p class="panel-title"><b>{{buyer.Name}}</b></p>
+        </div>
+        <div class="panel-body"  ng-if="pModal.ProductList.length == 0">
+            <div class="well well-lg text-center">
+                No Products
+            </div>
+        </div>
+        <table class="table table-hover table-bordered" ng-if="pModal.ProductList.length != 0">
+            <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    <div>ID</div>
+                </th>
+                <th>
+                    <div>Name</div>
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr ng-repeat="product in pModal.ProductList">
+                <td class="text-center">
+                    <span class="btn-group" uib-dropdown dropdown-append-to-body>
+                        <button type="button" class="btn btn-default" uib-dropdown-toggle><i class="fa fa-cog"></i> <span class="caret"></span></button>
+                        <ul uib-dropdown-menu role="menu" style="z-index: 9999">
+                            <li role="menuitem"><a ng-click="pModal.editProduct(product.ID, buyer.ID)">Edit Product</a></li>
+                            <!--<li role="menuitem"><a ui-sref=".assignments({productid:product.ID})">View Product Assignments</a></li>-->
+                            <li role="menuitem"><a ng-click="pModal.editBuyerAssignment(this)">Edit Buyer Assignment</a></li>
+                        </ul>
+                    </span>
+                </td>
+                <td class="col-xs-5">{{product.ID}}</td>
+                <td class="col-xs-6">{{product.Name}}</td>
+            </tr>
+
+            </tbody>
+        </table>
+        <div class="panel-footer">
+            <div class="text-right">
+                <button type="button" class="btn btn-primary" ng-click="pModal.UnfilterBuyers()" ng-if="pModal.oneBuyerSelected">Show All Buyers</button>
+                <button type="button" class="btn btn-success" ng-click="pModal.newProduct(buyer.ID)" ng-if="buyer.ID != 'Unassigned'"><i class="fa fa-plus-circle"></i> Create New</button>
+            </div>
+        </div>
+    </div>
+</section>

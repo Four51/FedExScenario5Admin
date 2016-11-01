@@ -1,0 +1,115 @@
+<article>
+    <h3 class="modal-header">
+        <b>New Price Schedule</b>
+    </h3>
+    <form name="PriceScheduleCreateForm" class="modal-body" ng-submit="psModal.Submit()">
+        <fieldset class="form-group">
+            <label for="priceScheduleNameInput">Price Schedule Name</label>
+            <input id="priceScheduleNameInput" type="text" class="form-control" ng-model="psModal.priceSchedule.Name" ng-required="true"/>
+        </fieldset>
+        <div class="row form-group">
+            <div class="col-sm-6 col-no-padding">
+                <div class="col-sm-6">
+                    Apply:
+                    <div>
+                        <label for="priceScheduleApplyShippingInput">
+                            <input id="priceScheduleApplyShippingInput" type="checkbox" ng-model="psModal.priceSchedule.ApplyShipping"/>
+                            Shipping
+                        </label>
+                    </div>
+                    <div>
+                        <label for="priceScheduleApplyTaxInput">
+                            <input id="priceScheduleApplyTaxInput" type="checkbox" ng-model="psModal.priceSchedule.ApplyTax"/>
+                            Tax
+                        </label>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    Quantity Selection:
+                    <div>
+                        <label for="priceScheduleCumlative">
+                            <input id="priceScheduleCumlative" type="radio" name="selection" ng-value="false" ng-model="psModal.priceSchedule.RestrictedQuantity"/>
+                            Open
+                        </label>
+                    </div>
+                    <div>
+                        <label for="priceScheduleRestricted">
+                            <input id="priceScheduleRestricted" type="radio" name="selection" ng-value="true" ng-model="psModal.priceSchedule.RestrictedQuantity"/>
+                            Restricted
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-no-padding">
+                <div class="col-sm-6">
+                    <label for="priceScheduleMinQInput">Minumum Quantity</label>
+                    <input id="priceScheduleMinQInput" ng-class="{'input-disabled': psModal.priceSchedule.RestrictedQuantity}" ng-disabled="psModal.priceSchedule.RestrictedQuantity" type="text" class="form-control" ng-model="psModal.priceSchedule.MinQuantity"/>
+                </div>
+                <div class="col-sm-6">
+                    <label for="priceScheduleMaxQInput">Maximum Quantity</label>
+                    <input id="priceScheduleMaxQInput" ng-class="{'input-disabled': psModal.priceSchedule.RestrictedQuantity}" ng-disabled="psModal.priceSchedule.RestrictedQuantity" type="text" class="form-control" ng-model="psModal.priceSchedule.MaxQuantity"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label for="priceScheduleTypeInput">Price Schedule Type</label>
+                <select id="priceScheduleTypeInput" class="form-control" ng-model="psModal.priceSchedule.OrderType">
+                    <option value="Standard">Standard</option>
+                    <option value="Replenishment">Replenishment</option>
+                    <option value="PriceRequest">Price Request</option>
+                </select>
+            </div>
+            <div class="col-sm-2 form-group">
+                <label for="priceSchedulePBQInput">Quantity</label>
+                <input id="priceSchedulePBQInput" type="number" class="form-control" ng-model="psModal.quantity"/>
+            </div>
+            <div class="col-sm-2 form-group">
+                <label for="priceSchedulePBPInput">Price (each)</label>
+                <input id="priceSchedulePBPInput" type="number" step="any" class="form-control" ng-model="psModal.price"/>
+            </div>
+            <div class="col-sm-2 form-group">
+                <button type="button" class="btn btn-default form-control addps" ng-disabled="!psModal.price || !psModal.quantity" ng-click="psModal.addPriceBreak()">Add</button>
+            </div>
+        </div>
+        <div class="row" ng-if="psModal.priceSchedule.PriceBreaks.length">
+            <div class="col-sm-6 col-sm-offset-6">
+                <section class="table-fixed-header">
+                    <div class="table-header-bg"></div>
+                    <div class="table-container">
+                        <table class="table table-hover">
+                            <colgroup>
+                                <col class="action-column"/>
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>
+                                </th>
+                                <th>
+                                    <div>Quantity</div>
+                                </th>
+                                <th>
+                                    <div>Price</div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="pricebreak in psModal.priceSchedule.PriceBreaks track by $index">
+                                <td class="text-center">
+                                    <a class="fa fa-trash text-danger" ng-click="psModal.deletePriceBreak(psModal.priceSchedule, $index)"></a>
+                                </td>
+                                <td>{{pricebreak.Quantity}}</td>
+                                <td>{{pricebreak.Price * pricebreak.Quantity | currency}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" ng-disabled="PriceScheduleCreateForm.$invalid || !psModal.priceSchedule.PriceBreaks.length">Save</button>
+            <button type="button" class="btn btn-default" ng-click="psModal.cancel()">Cancel</button>
+        </div>
+    </form>
+</article>

@@ -1,0 +1,188 @@
+<article class="container">
+    <h3 class="page-header">
+        <b>Edit Product:</b> {{productEdit.productName}}
+    </h3>
+    <form name="CreateForm" ng-submit="productEdit.Submit()">
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label for="productIDInput">Product ID</label>
+                <input id="productIDInput" type="text" class="form-control" ng-model="productEdit.product.ID" ng-required="true"/>
+            </div>
+            <div class="col-sm-6 form-group">
+                <label for="productNameInput">Product Name</label>
+                <input id="productNameInput" type="text" class="form-control" ng-model="productEdit.product.Name" ng-required="true"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 form-group">
+                <label for="productDescriptionInput">Description</label>
+                <textarea id="productDescriptionInput" type="text" class="form-control" ng-model="productEdit.product.Description"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label for="productQuantityMultInput">Quantity Multiplier</label>
+                <input id="productQuantityMultInput" type="number" class="form-control" ng-model="productEdit.product.QuantityMultiplier" ng-required="true"/>
+            </div>
+            <div class="form-group col-sm-6">
+                <label for="productShipWeightInput">Ship Weight</label>
+                <input id="productShipWeightInput" type="number" class="form-control" ng-model="productEdit.product.ShipWeight"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label for="productTypeInput">Product Type</label>
+                <select id="productTypeInput" class="form-control" ng-model="productEdit.product.Type" ng-required="true">
+                    <option value="Static">Static</option>
+                    <option value="VariableText">Variable Text</option>
+                    <option value="Kit">Kit</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-6">
+                <label for="productInventoryInput">Inventory Notification Point</label>
+                <input id="productInventoryInput" type="number" class="form-control" ng-model="productEdit.product.InventoryNotificationPoint"/>
+            </div>
+        </div>
+        <div class="panel panel-default col-sm-6">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        Inventory Options:
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label for="productInventory2Input">
+                            <input id="productInventory2Input" type="checkbox" ng-model="productEdit.product.InventoryEnabled"/>
+                            Track Inventory
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label for="productInventory3Input">
+                            <input id="productInventory3Input" type="checkbox" ng-model="productEdit.product.VariantLevelInventory"/>
+                            Variant Level Inventory
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label for="productInventory4Input">
+                            <input id="productInventory4Input" type="checkbox" ng-model="productEdit.product.ExceedInventory"/>
+                            Can Exceed Inventory
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label for="productInventory5Input">
+                            <input id="productInventory5Input" type="checkbox" ng-model="productEdit.product.DisplayInventory"/>
+                            Display Inventory
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <ordercloud-file-upload model="productEdit.product" keyname="image" label="Image" extensions="jpg, png, gif, jpeg, tiff" invalid-extension="x"></ordercloud-file-upload>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <label for="productActiveInput">
+                    <input id="productActiveInput" type="checkbox" ng-model="productEdit.product.Active"/>
+                    Active
+                </label>
+            </div>
+        </div>
+        <h3>Custom Global Configurations</h3>
+        <div class="row">
+            <div class="col-xs-12"><h4>Specs</h4></div>
+            <div class="col-xs-12" >
+                <h5 ng-show="!productEdit.productSpecs.length">NO SPECS ASSIGNED</h5>
+                <table class="table table-hover table-bordered" ng-show="productEdit.productSpecs.length">
+                    <colgroup>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col class="action-column"/>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>
+                            <div>Name</div>
+                        </th>
+                        <th>
+                            <div>ID</div>
+                        </th>
+                        <th>
+                            <div>Default</div>
+                        </th>
+                        <th>
+                            <div>Required</div>
+                        </th>
+                        <th>
+                            <div>Defines Variant</div>
+                        </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="spec in productEdit.productSpecs">
+                        <td>{{spec.Name}}</td>
+                        <td>{{spec.ID}}</td>
+                        <td>{{spec.DefaultValue}}</td>
+                        <td>{{spec.Required}}</td>
+                        <td>{{spec.DefinesVariant}}</td>
+                        <td><a class="pull-right" href ng-click="productEdit.removeSpec(spec, $index)"><i class="fa fa-remove"></i></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-12" ng-show="!productEdit.showNewSpecInput">
+                <a href ng-click="productEdit.showNewSpecInput = true"><i class="fa fa-plus-circle fa-2x"></i></a>
+            </div>
+            <div class="col-xs-12 form-group" ng-show="productEdit.showNewSpecInput">
+                <label for="newSpec">Search For Specs</label>
+                <select ng-options="spec as spec.Name for spec in productEdit.specList" class="form-control" ng-model="productEdit.NewSpec" id="newSpec">
+                </select>
+                <a type="button" class="btn btn-success" ng-disabled="!productEdit.NewSpec" ng-click="productEdit.addSpec()">Add Spec to Product</a>
+            </div>
+            <div class="form-group col-xs-6">
+                <label for="fulfilledBy">
+                    Vendor Supplier
+                </label>
+                <div class="input-group">
+                    <select id="fulfilledBy" ng-disabled="productEdit.product.xp.FulfilledInternally" class="form-control" ng-options="supplier.ID as supplier.FirstName for supplier in productEdit.suppliers" ng-model="productEdit.product.xp.FulfilledBy"></select>
+                    <span class="input-group-addon">
+                        <input type="checkbox" ng-model="productEdit.product.xp.FulfilledInternally">
+                        Fulfilled Internally
+                    </span>
+                </div>
+            </div>
+            <div class="form-group col-xs-6">
+                <label for="SupplierReroute">
+                    Re-Route Supplier (Demand Overload)
+                </label>
+                <div class="input-group">
+                    <select id="SupplierReroute" ng-disabled="productEdit.noReroute" class="form-control" ng-options="supplier.ID as supplier.FirstName for supplier in productEdit.suppliers" ng-model="productEdit.product.xp.RerouteSupplier"></select>
+                    <span class="input-group-addon">
+                        <input type="checkbox" ng-model="productEdit.noReroute">
+                        None
+                    </span>
+                </div>
+            </div>
+            <div>
+                <!--TODO: put specs here... should be an add button to add multiple-->
+            </div>
+        </div>
+        <scenario-product-create model="productEdit" buyerid="productEdit.buyerid" ></scenario-product-create>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" ng-disabled="ProductEditForm.$invalid">Save</button>
+            <button type="button" class="btn btn-default" ui-sref="^">Cancel</button>
+            <button type="button" class="btn btn-default" ng-click="productEdit.Delete()"><i class="fa fa-trash text-danger"></i></button>
+        </div>
+    </form>
+</article>

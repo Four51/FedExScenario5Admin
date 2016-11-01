@@ -1,0 +1,280 @@
+<article class="container">
+    <h3 class="page-header">
+        <b>New Product</b>
+    </h3>
+    <form name="CreateForm" ng-submit="productCreate.Submit()">
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label for="productIDInput">Product ID</label>
+                <input id="productIDInput" ordercloud-auto-id type="text" class="form-control" ng-model="productCreate.product.ID"/>
+            </div>
+            <div class="col-sm-6 form-group">
+                <label for="productNameInput">Product Name</label>
+                <input id="productNameInput" type="text" class="form-control" ng-model="productCreate.product.Name" ng-required="true"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 form-group">
+                <label for="productDescriptionInput">Description</label>
+                <textarea id="productDescriptionInput" type="text" class="form-control" ng-model="productCreate.product.Description"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                <label for="productQuantityMultInput">Quantity Multiplier</label>
+                <input id="productQuantityMultInput" type="number" class="form-control" ng-model="productCreate.product.QuantityMultiplier" ng-required="true"/>
+            </div>
+            <div class="form-group col-sm-6">
+                <label for="productShipWeightInput">Ship Weight</label>
+                <input id="productShipWeightInput" type="number" class="form-control" ng-model="productCreate.product.ShipWeight"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label for="productTypeInput">Product Type</label>
+                <select id="productTypeInput" class="form-control" ng-model="productCreate.product.Type" ng-required="true">
+                    <option value="Static">Static</option>
+                    <option value="VariableText">Variable Text</option>
+                    <option value="Kit">Kit</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-6">
+                <label for="productInventoryInput">Inventory Notification Point</label>
+                <input id="productInventoryInput" type="number" class="form-control" ng-model="productCreate.product.InventoryNotificationPoint"/>
+            </div>
+        </div>
+        <div class="panel panel-default col-sm-6">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        Inventory Options:
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label for="productInventory2Input">
+                            <input id="productInventory2Input" type="checkbox" ng-model="productCreate.product.InventoryEnabled"/>
+                            Track Inventory
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label for="productInventory3Input">
+                            <input id="productInventory3Input" type="checkbox" ng-model="productCreate.product.VariantLevelInventory"/>
+                            Variant Level Inventory
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label for="productInventory4Input">
+                            <input id="productInventory4Input" type="checkbox" ng-model="productCreate.product.ExceedInventory"/>
+                            Can Exceed Inventory
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <label for="productInventory5Input">
+                            <input id="productInventory5Input" type="checkbox" ng-model="productCreate.product.DisplayInventory"/>
+                            Display Inventory
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <ordercloud-file-upload model="productCreate.product" keyname="image" label="Image" extensions="jpg, png, gif, jpeg, tiff" invalid-extension="x"></ordercloud-file-upload>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <label for="productActiveInput">
+                    <input id="productActiveInput" type="checkbox" ng-model="productCreate.product.Active"/>
+                    Active
+                </label>
+            </div>
+        </div>
+        <h3>Custom Global Configurations</h3>
+        <div class="row">
+            <div class="col-xs-12"><h4>Specs</h4></div>
+            <div class="col-xs-12" >
+                <h5 ng-show="!productCreate.productSpecs.length">NO SPECS ASSIGNED</h5>
+                <table class="table table-hover table-bordered" ng-show="productCreate.productSpecs.length">
+                    <colgroup>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col class="action-column"/>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>
+                            <div>Name</div>
+                        </th>
+                        <th>
+                            <div>ID</div>
+                        </th>
+                        <th>
+                            <div>Default</div>
+                        </th>
+                        <th>
+                            <div>Required</div>
+                        </th>
+                        <th>
+                            <div>Defines Variant</div>
+                        </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="spec in productCreate.productSpecs">
+                        <td>{{spec.Name}}</td>
+                        <td>{{spec.ID}}</td>
+                        <td>{{spec.DefaultValue}}</td>
+                        <td>{{spec.Required}}</td>
+                        <td>{{spec.DefinesVariant}}</td>
+                        <td><a class="pull-right" href ng-click="productCreate.removeSpec($index)"><i class="fa fa-remove"></i></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-12" ng-show="!productCreate.showNewSpecInput">
+                <a href ng-click="productCreate.showNewSpecInput = true"><i class="fa fa-plus-circle fa-2x"></i></a>
+            </div>
+            <div class="col-xs-12 form-group" ng-show="productCreate.showNewSpecInput">
+                <label for="newSpec">Search For Specs</label>
+                <select ng-options="spec as spec.Name for spec in productCreate.specList" class="form-control" ng-model="productCreate.NewSpec" id="newSpec">
+                </select>
+                <a type="button" class="btn btn-success" ng-disabled="!productCreate.NewSpec" ng-click="productCreate.addSpec()">Add Spec to Product</a>
+            </div>
+            <div class="form-group col-xs-6">
+                <label for="fulfilledBy">
+                    Vendor Supplier
+                </label>
+                <div class="input-group">
+                    <select id="fulfilledBy" ng-disabled="productCreate.product.xp.FulfilledInternally" class="form-control" ng-options="supplier.ID as supplier.FirstName for supplier in productCreate.suppliers" ng-model="productCreate.product.xp.FulfilledBy"></select>
+                    <span class="input-group-addon">
+                        <input type="checkbox" ng-model="productCreate.product.xp.FulfilledInternally">
+                        Fulfilled Internally
+                    </span>
+                </div>
+            </div>
+            <div class="form-group col-xs-6">
+                <label for="SupplierReroute">
+                    Re-Route Supplier (Demand Overload)
+                </label>
+                <div class="input-group">
+                    <select id="SupplierReroute" ng-disabled="productCreate.noReroute" class="form-control" ng-options="supplier.ID as supplier.FirstName for supplier in productCreate.suppliers" ng-model="productCreate.product.xp.RerouteSupplier"></select>
+                    <span class="input-group-addon">
+                        <input type="checkbox" ng-model="productCreate.noReroute">
+                        None
+                    </span>
+                </div>
+            </div>
+
+        </div>
+        <scenario-product-create model="productCreate" buyerid="productCreate.buyerid" ></scenario-product-create>
+        <div class="row" ng-if="productCreate.buyerid == 'FedExFranchiseBuyer'">
+            <div class="col-md-12">
+                <fieldset class="form-group checkbox">
+                    <label for="productMandatoryInput" class="control-label">
+                        <input id="productMandatoryInput" type="checkbox" ng-model="productCreate.product.xp.Mandatory"/>
+                        Mandatory Product
+                    </label>
+                </fieldset>
+                <fieldset class="form-group" uib-collapse="!productCreate.product.xp.Mandatory">
+                    <label for="productInstructionsInput">Placement Instructions</label>
+                    <textarea id="productInstructionsInput" type="text" class="form-control" ng-model="productCreate.product.xp.PlacementInstructions" ng-required="productCreate.product.xp.Mandatory"></textarea>
+                </fieldset>
+            </div>
+
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Price Schedule <small>(choose one)</small>
+                        </h3>
+                    </div>
+                    <div class="panel-body" ng-if="!productCreate.priceSchedules.Items.length">
+                        <div class="well well-sm text-center">
+                            You have no price schedules. <a href="" ng-click="productCreate.newPriceSchedule()">Create one now</a>
+                        </div>
+                    </div>
+                    <table class="table table-hover" ng-if="productCreate.priceSchedules.Items.length">
+                        <colgroup>
+                            <col>
+                            <col>
+                            <col class="action-column"/>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>
+                                <div>Name</div>
+                            </th>
+                            <th>
+                                <div>Type</div>
+                            </th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="priceSchedule in productCreate.priceSchedules.Items track by $index" ng-click="productCreate.selectPriceSchedule(this)">
+                            <td>{{priceSchedule.Name}}</td>
+                            <td>{{priceSchedule.OrderType}}</td>
+                            <td><i class="fa" ng-class="{'fa-check-circle text-success':priceSchedule.ID == productCreate.assignment.StandardPriceScheduleID, 'fa-circle-o text-muted':priceSchedule.ID != productCreate.assignment.StandardPriceScheduleID}"></i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="panel-footer text-right" ng-if="productCreate.priceSchedules.Items.length">
+                        <button type="button" class="btn btn-success" ng-click="productCreate.newPriceSchedule()"><i class="fa fa-plus-circle"></i> Create New Price Schedule</button>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Retail Profile Assignment <small>(select at least one)</small>
+                        </h3>
+                    </div>
+                    <div class="panel-body" ng-if="!productCreate.priceSchedules.Items.length">
+                        <div class="well well-sm text-center">
+                            You have no retail profiles. <a href="" ui-sref="base.retailProfiles.create">Create one now</a>
+                        </div>
+                    </div>
+                    <table class="table table-hover" ng-if="productCreate.retailProfiles.Items.length">
+                        <colgroup>
+                            <col>
+                            <col>
+                            <col class="action-column"/>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>
+                                <div>ID</div>
+                            </th>
+                            <th>
+                                <div>Name</div>
+                            </th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="profile in productCreate.retailProfiles.Items track by $index" ng-click="productCreate.toggleRetailProfile(this)">
+                            <td>{{profile.ID}}</td>
+                            <td>{{profile.Name}}</td>
+                            <td><i class="fa" ng-class="{'fa-check-circle text-success':profile.Selected, 'fa-circle-o text-muted':!profile.Selected}"></i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" ng-disabled="ProductCreateForm.$invalid">Save</button>
+            <button type="button" class="btn btn-default" ui-sref="^">Cancel</button>
+        </div>
+    </form>
+</article>

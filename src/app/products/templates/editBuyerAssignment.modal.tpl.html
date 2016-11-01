@@ -1,0 +1,14 @@
+<div>
+	<div class="modal-header">
+		<h4>Buyer Assignment</h4>
+	</div>
+	<div class="modal-body">
+		<div class="list-group">
+			<a ng-class="{active:buyer.ID == baModal.selectedBuyer.ID}" href="" class="list-group-item" ng-repeat="buyer in baModal.buyers" ng-click="baModal.selectBuyer(this)">{{buyer.Name}}</a>
+		</div>
+	</div>
+	<div class="modal-footer text-right">
+		<button type="button" class="btn btn-default" ng-click="baModal.cancel()">Cancel</button>
+		<button type="button" class="btn btn-success" ng-click="baModal.confirm()">Confirm</button>
+	</div>
+</div>

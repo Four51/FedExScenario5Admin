@@ -1,0 +1,18 @@
+<div>
+	<div class="modal-header">
+		<h4>Change Line Item Fulfillment</h4>
+	</div>
+	<div class="modal-body">
+		<p><b>Product: </b> {{changeFull.lineItem.Product.Name}}</p>
+		<p><b>Line Item ID: </b> {{changeFull.lineItem.ID}}</p>
+		<div class="form-group">
+			<label for="SupplierChoice">ReRoute To Vendor Partner</label>
+			<select id="SupplierChoice" class="form-control" ng-model="changeFull.selectedSupplier" ng-options="supplier as supplier.FirstName for supplier in changeFull.suppliers track by supplier.ID"></select>
+		</div>
+	</div>
+	<div class="modal-footer text-right">
+		<button class="btn btn-danger" ng-click="changeFull.clearOverride()" ng-if="changeFull.lineItem.xp.FulfillOverride.ID">Clear Fulfillment Override</button>
+		<button class="btn btn-default" ng-click="changeFull.cancel()">Cancel</button>
+		<button class="btn btn-primary" ng-click="changeFull.confirm()">Confirm</button>
+	</div>
+</div>

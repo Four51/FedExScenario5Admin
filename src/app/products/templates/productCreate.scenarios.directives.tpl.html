@@ -1,0 +1,41 @@
+<h3 ng-show="scenario.buyerid == 'Boeing' || scenario.buyerid == 'MedicalComplianceConsultingFirm' || scenario.buyerid == 'FedExFranchiseBuyer'">Custom Buyer Configuration</h3>
+
+<div ng-if="scenario.buyerid == 'Boeing'">
+    <div class="row col-xs-12">
+        <div class="form-group">
+            <input id="RequiresApproval" type="checkbox" ng-model="scenario.product.model.xp.NeedsApproval">
+            <label for="RequiresApproval"> Requires Approval</label>
+        </div>
+    </div>
+</div>
+
+<div ng-if="scenario.buyerid == 'MedicalComplianceConsultingFirm'">
+    <div class="col-sm-6">
+        <ordercloud-file-upload model="scenario.model.product" keyname="document" label="Image" extensions="jpg, png, gif, jpeg, tiff, ppt, pptx, doc, docx" invalid-extension="x"></ordercloud-file-upload>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="productType">Product Type</label>
+            <select id="productType" class="form-control" ng-model="scenario.model.product.xp.Type" ng-required="true">
+                <option value="Workbook">Workbook</option>
+                <option value="PosterBanner">Poster/Banner</option>
+                <option value="Document">Document</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+
+<!--<div ng-if="scenario.buyerid == 'FedExFranchiseBuyer'">
+    <div class="row col-xs-12">
+        <div class="form-group">
+            <input id="IsMandatory" type="checkbox" ng-model="scenario.model.product.xp.Mandatory">
+            <label for="IsMandatory"> Mandatory</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="PlacementInstructions">Placement Instructions</label>
+        <textarea id="PlacementInstructions" class="form-control" rows="2" ng-model="scenario.model.product.xp.PlacementInstructions"></textarea>
+    </div>
+</div>-->
+

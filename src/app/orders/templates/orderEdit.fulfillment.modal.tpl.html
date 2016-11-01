@@ -1,0 +1,23 @@
+<form name="FulfillForm" ng-submit="fulfillItem.confirm()">
+	<div class="modal-header">
+		<h4>Update Line Item Fulfillment</h4>
+	</div>
+	<div class="modal-body">
+		<p><b>Product: </b> {{fulfillItem.lineItem.Product.Name}}</p>
+		<p><b>Line Item ID: </b> {{fulfillItem.lineItem.ID}}</p>
+		<div class="form-group row">
+			<div class="col-xs-4">
+				<label for="Cost">Shipment Cost:</label>
+				<input type="number" class="form-control" id="Cost" ng-model="fulfillItem.shipment.Cost" required>
+			</div>
+			<div class="col-xs-8">
+				<label for="Tracking">Tracking Number</label>
+				<input type="number" class="form-control" id="Tracking" ng-model="fulfillItem.shipment.TrackingNumber" required>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer text-right">
+		<button type="button" class="btn btn-default" ng-click="fulfillItem.cancel()">Cancel</button>
+		<button type="submit" class="btn btn-success" ng-disabled="FulfillForm.$invalid">Confirm Shipment</button>
+	</div>
+</form>

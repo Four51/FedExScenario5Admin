@@ -1,0 +1,95 @@
+<ui-view>
+    <div class="container">
+        <header class="text-center">
+            <h3>What would you like to print today?</h3>
+        </header>
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="buyer in products.BuyerList" >
+                <div class="thumbnail" ng-click="products.productModal(this, buyer)">
+                    <img ng-src="{{products.mappings[buyer.ID].Logo}}">
+                    <div style="min-height: 100px" class="caption text-center">
+                        <h4>{{products.mappings[buyer.ID].Name}}</h4>
+                        <small>{{products.mappings[buyer.ID].Description }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   <!-- <article class="container-fluid">
+        <h3 class="page-header">
+            Products
+        </h3>
+        <div class="col-xs-8 col-xs-offset-2">
+            <div class="form-group">
+                <input class="form-control" type="text"
+                       ng-model="products.buyerSearchTerm"
+                       placeholder="Search Buyers..."
+                       uib-typeahead="buyer.Name for buyer in products.searchBuyers($viewValue)"
+                       typeahead-on-select="products.FilterOnBuyer($item)"
+                       typeahead-template-url="buyers/templates/buyerSearch.tpl.html"
+                />
+            </div>
+        </div>
+
+        <div class="well well-lg text-center" ng-if="!products.ProductList.length">
+            <b ng-if="!products.searching()">The selected buyer does not have any products.</b>
+            <b ng-if="products.searching()"><i class="fa fa-search"></i> No products match your search.</b>
+        </div>
+        <section class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default" ng-repeat-start="buyer in products.BuyerList" ng-show="!products.oneBuyerSelected || products.BuyerSelected.ID == buyer.ID">
+                <div class="panel-heading">
+                    <p class="panel-title"><b>{{buyer.Name}}</b></p>
+                </div>
+                <div class="panel-body"  ng-if="products.BuyerProducts[buyer.ID].length == 0">
+                    <div class="well well-lg text-center">
+                        No Products
+                    </div>
+                </div>
+                    <table class="table table-hover table-bordered" ng-if="products.BuyerProducts[buyer.ID].length != 0">
+                        <thead>
+                        <tr>
+                            <th>
+                            </th>
+                            <th>
+                                <div>ID</div>
+                            </th>
+                            <th>
+                                <div>Name</div>
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr ng-repeat="product in products.ProductList | productgroupfilter:buyer.ID">
+                            <td class="text-center">
+                            <span class="btn-group" uib-dropdown dropdown-append-to-body>
+                                <button type="button" class="btn btn-default" uib-dropdown-toggle><i class="fa fa-cog"></i> <span class="caret"></span></button>
+                                <ul uib-dropdown-menu role="menu">
+                                    <li role="menuitem"><a ui-sref=".edit({productid:product.ID, buyerid: buyer.ID})">Edit Product</a></li>
+                                    <li role="menuitem"><a ui-sref=".assignments({productid:product.ID})">View Product Assignments</a></li>
+                                    &lt;!&ndash;TODO: add modal for product buyer assignment below&ndash;&gt;
+                                    <li role="menuitem"><a ng-click="products.editBuyerAssignment(this)">Edit Buyer Assignment</a></li>
+                                </ul>
+                            </span>
+                            </td>
+                            <td class="col-xs-5">{{product.ID}}</td>
+                            <td class="col-xs-6">{{product.Name}}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                <div class="panel-footer">
+                    <div class="text-right">
+                        <button type="button" class="btn btn-primary" ng-click="products.UnfilterBuyers()" ng-if="products.oneBuyerSelected">Show All Buyers</button>
+                        <button type="button" class="btn btn-success" ng-click="products.newProduct(buyer.ID)" ng-if="buyer.ID != 'Unassigned'"><i class="fa fa-plus-circle"></i> Create New</button>
+                    </div>
+                </div>
+            </div>
+            <hr ng-repeat-end>
+        </section>
+
+
+
+    </article>-->
+</ui-view>
